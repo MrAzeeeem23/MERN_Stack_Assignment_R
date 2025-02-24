@@ -7,10 +7,12 @@ import TransactionDashboard from './components/TransactionDashboard'
 import Graph from './components/Graph'
 import PieChart from './components/PieChart'
 import TotalSales from './components/TotalSales'
+import Home from './components/Home'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
+      <Route path='' element={<Home />} />
       <Route path='/table' element={<TransactionDashboard />} />
       <Route path='/graph' element={<Graph />} />
       <Route path='/pie' element={<PieChart />} />

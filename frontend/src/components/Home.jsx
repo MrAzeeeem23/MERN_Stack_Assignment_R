@@ -10,7 +10,9 @@ function Home() {
   test()
 
   return (
-    <div>Home</div>
+    <div className='max-h-full bg-amber-200'>
+      Transaction of Products
+    </div>
   )
 }
 

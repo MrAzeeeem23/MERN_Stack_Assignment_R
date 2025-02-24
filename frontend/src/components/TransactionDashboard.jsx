@@ -7,14 +7,16 @@ function TransactionDashboard() {
     const [search, setSearch] = useState();
     const [page, setPage] = useState(1);
     const [totalPage, setTotalPage] = useState();
+    const [expand, setExpand] = useState({});
 
     const getData = async () => {
         try {
             const res = await axios.get(
-                `http://localhost:3000/api/product?search=${search ? search : {}}&page=${page}&limit=10`
+                `http://localhost:3000/api/product?search=${search ? search : {}
+                }&page=${page}&limit=10`
             );
             setData(res.data.product);
-            setTotalPage(res.data.totalPage)
+            setTotalPage(res.data.totalPage);
         } catch (error) {
             console.log(error.message);
         }
@@ -23,15 +25,19 @@ function TransactionDashboard() {
         getData();
     }, [page, search]);
 
+    const toggle = (id) => {
+        setExpand((prev) => ({ ...prev, [id]: !prev[id] }));
+    };
+
     return (
         <div className="p-4">
             <div className="my-2">
-                    <input
+                <input
                     type="text"
                     placeholder="Search"
                     onChange={(e) => setSearch(e.target.value)}
-                    className="p-2 bg-gray-300 w-80 rounded-xl"
-                    />
+                    className="p-2 bg-blue-100 w-80 rounded-xl"
+                />
             </div>
             <div className="overflow-x-auto">
                 <table className="min-w-full bg-white shadow-md rounded-lg">
@@ -51,10 +57,23 @@ function TransactionDashboard() {
                             <tr key={product.id} className="border-b">
                                 <td className="px-4 py-2">{product.id}</td>
                                 <td className="px-4 py-2">{product.title}</td>
-                                <td className="px-4 py-2">{product.description}</td>
+                                <td className="px-4 py-2 w-180">
+                                    {product.description.slice(
+                                        0,
+                                        expand[product.id] ? 1000 : 150
+                                    )}{" "}
+                                    <button
+                                        className="text-blue-500 cursor-pointer"
+                                        onClick={() => toggle(product.id)}
+                                    >
+                                        Show {expand[product.id] ? "Less" : "More"}
+                                    </button>
+                                </td>
                                 <td className="px-4 py-2">{product.price}</td>
                                 <td className="px-4 py-2">{product.category}</td>
-                                <td className="px-4 py-2">{product.sold ? "sold" : "unsold"}</td>
+                                <td className="px-4 py-2">
+                                    {product.sold ? "sold" : "unsold"}
+                                </td>
                                 <td className="px-4 py-2">
                                     <img className="w-20 h-auto" src={product.image} alt="img" />
                                 </td>
@@ -64,9 +83,29 @@ function TransactionDashboard() {
                 </table>
             </div>
             <div className="mt-4 flex justify-center">
-                {page - 1 < 1 ? "" : (<button className="px-4 py-2 mx-2 bg-blue-500 text-white rounded" onClick={() => setPage(page - 1)}>Prev</button>)}
-                <span>{page}/{totalPage}</span>
-                {page > totalPage - 1 ? "" : (<button className="px-4 py-2 mx-2 bg-blue-500 text-white rounded" onClick={() => setPage(page + 1)}>Next</button>)}
+                {page - 1 < 1 ? (
+                    ""
+                ) : (
+                    <button
+                        className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+                        onClick={() => setPage(page - 1)}
+                    >
+                        Prev
+                    </button>
+                )}
+                <span className="text-xl text-center p-2 w-10">
+                    {page}/{totalPage}
+                </span>
+                {page > totalPage - 1 ? (
+                    ""
+                ) : (
+                    <button
+                        className="px-4 py-2 mx-2 bg-blue-500 text-white rounded"
+                        onClick={() => setPage(page + 1)}
+                    >
+                        Next
+                    </button>
+                )}
             </div>
         </div>
     );

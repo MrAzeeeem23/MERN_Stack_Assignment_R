@@ -47,10 +47,10 @@ function PieChart() {
     data.map((e) => arr.push(e._id))
 
     return (
-        <div>
-            <div>
-                <h1>Select Month</h1>
-                <select value={month} onChange={handelMonth}>
+        <div className="max-w-full bg-blue-50 flex flex-col justify-center items-center">
+            <div className="flex p-2">
+                <h1 className="font-serif py-2 pr-2">Select Month</h1>
+                <select value={month} onChange={handelMonth} className="bg-blue-100 p-1 rounded stroke-0 outline-0 cursor-pointer">
                     <option value={""} disabled>
                         Select Month
                     </option>
@@ -72,7 +72,8 @@ function PieChart() {
                                 backgroundColor: [
                                     'rgb(255, 99, 132)',
                                     'rgb(54, 162, 235)',
-                                    'rgb(255, 205, 86)'
+                                    'rgb(255, 205, 86)',
+                                    'rgb(233, 221, 32)',
                                 ]
 
                             },

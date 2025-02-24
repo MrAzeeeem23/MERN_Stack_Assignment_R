@@ -44,13 +44,17 @@ function Graph() {
         getData();
     }, [month]);
 
-    data.map((e) => arr.push(e._id))
+    data.map((e) => arr.push(e._id));
 
     return (
-        <div>
-            <div>
-                <h1>Select Month</h1>
-                <select value={month} onChange={handelMonth}>
+        <div className="max-w-full bg-blue-50 flex flex-col justify-center items-center">
+            <div className="flex p-2">
+                <h1 className="font-serif py-2 pr-2">Select Month:</h1>
+                <select
+                    value={month}
+                    onChange={handelMonth}
+                    className="bg-blue-100 p-1 rounded stroke-0 outline-0 cursor-pointer"
+                >
                     <option value={""} disabled>
                         Select Month
                     </option>
@@ -64,13 +68,25 @@ function Graph() {
             <div className="w-150">
                 <Bar
                     data={{
-                        labels: ['0-100', '100-200', '200-300', '300-400', '400-500', '500-600', '600-700', '700-800', '800-900', '900-960', "950-above"],
+                        labels: [
+                            "0-100",
+                            "100-200",
+                            "200-300",
+                            "300-400",
+                            "400-500",
+                            "500-600",
+                            "600-700",
+                            "700-800",
+                            "800-900",
+                            "900-960",
+                            "950-above",
+                        ],
                         datasets: [
                             {
-                                label: 'Price',
+                                label: "Price",
                                 data: arr,
                             },
-                        ]
+                        ],
                     }}
                 />
             </div>
